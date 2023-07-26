@@ -16,6 +16,7 @@ import { blueGrey } from "@mui/material/colors";
 import DoneIcon from '@mui/icons-material/Done';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import Typography from '@mui/material/Typography';
 
 
 const StyledButton = styled(Button)(({ theme }) => ({
@@ -90,7 +91,11 @@ const ProductDetails = ({ product, products }) => {
 
         <div className="product-detail-desc">
           <h1>{name}</h1>
-          <p className="price">${price} USD</p>
+          <Typography variant="h5" 
+            sx={{ marginTop: "20px", marginBottom: "20px", fontWeight: "bold", fontSize: "26px", color: blueGrey[900]}}
+          >
+            {price}$
+          </Typography>
           <h4>Size: </h4>
           <p className='product-input'>
             <Stack direction="row" spacing={1}>
@@ -103,7 +108,21 @@ const ProductDetails = ({ product, products }) => {
                   <ToggleButton
                     key={i} 
                     value={obj}
-                    sx={{fontSize: "16px",  fontWeight: "bold", padding: "15px", maxHeight: "40px", minWidth: "90px", border: "1px solid grey"}} 
+                    sx={{fontSize: "16px",  fontWeight: "bold", 
+                        padding: "15px", maxHeight: "40px", 
+                        minWidth: "90px", border: "1px solid grey",
+                        color: blueGrey[700],
+                        "&:hover" : {
+                          backgroundColor: blueGrey[100],
+                          borderColor: blueGrey[300],
+                          color: blueGrey[900]
+                        },
+                        "&.Mui-selected, &.Mui-selected:hover": {
+                          color: "white",
+                          backgroundColor: blueGrey[600]
+                        }
+                      
+                      }} 
                   >
                     {obj}
                   </ToggleButton>
@@ -118,12 +137,26 @@ const ProductDetails = ({ product, products }) => {
                   value={selectedGrind}
                   exclusive
                   onChange={grindSelect}
+                 
                 >
                   {grind.map((obj, i) => 
                     <ToggleButton
                       key={i} 
                       value={obj}
-                      sx={{fontSize: "14px", fontWeight: "bold", padding: "15px", maxHeight: "40px", minWidth: "90px", border: "1px solid grey"}} 
+                      sx={{fontSize: "14px", fontWeight: "bold", 
+                          padding: "15px", maxHeight: "40px",
+                          minWidth: "90px", border: "1px solid grey", 
+                          color: blueGrey[700],
+                          "&:hover" : {
+                            backgroundColor: blueGrey[100],
+                            borderColor: blueGrey[300],
+                            color: blueGrey[900]
+                          },
+                          "&.Mui-selected, &.Mui-selected:hover": {
+                            color: "white",
+                            backgroundColor: blueGrey[600]
+                          }
+                      }} 
                     >
                       {obj}
                     </ToggleButton>
