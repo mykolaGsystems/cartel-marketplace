@@ -15,9 +15,9 @@ import AddressForm from './AddressForm';
 import PaymentForm from './PaymentForm';
 import Review from './Review';
 
-
 import { encodeData }  from "../../lib/services";
-
+import { useCheckoutContext } from '../../context/CheckoutContext';
+import { toast } from 'react-hot-toast';
 
 const steps = ['Shipping address', 'Review your order'];
 
@@ -36,21 +36,47 @@ function getStepContent(step) {
 
 export default function Checkout() {
   const [activeStep, setActiveStep] = React.useState(0);
+  const { firstName, lastName, email, 
+          mobile, address1,  address2, 
+          city, state, zip, country } = useCheckoutContext();
 
   const handleNext = async () => {
-    setActiveStep(activeStep + 1);
-    let msg = {
-      "Country-Region": "UK",
-      "FullName": "Mykola Gavrysh",
-      "PhoneNumber": "+447856179582",
-      "Postcode": "S37HZ",
-      "AddressLine1": "2 Moore Street",
-      "AddressLine2": "cosmos Apartment",
-      "City": "Sheffield"
-    }
-    const res = await encodeData(msg);
-    console.log(res.data)
     
+    const required = ["FirstName", "LastName", "Email", "MobileNumber",
+                      "AddressLine1", "City", "Postcode", "Country"];
+    let request = {
+      "FirstName": firstName, 
+      "LastName": lastName,
+      "Email":  email,
+      "MobileNumber": mobile,
+      "AddressLine1": address1,
+      "AddressLine2": address2,
+      "City": city,
+      "State": state,
+      "Postcode": zip,
+      "Country": country,
+    };
+
+    let validation = true;
+
+    required.forEach((field) => {
+      if(request[field] == ''){
+        toast.error(`Error. Field is empty: ${field}`);
+        validation = false;
+      };
+    });
+    
+    if(validation){
+      toast.promise(
+        encodeData(request),
+         {
+           loading: 'Encrypting User Data...',
+           success: <b>Encryption successful!</b>,
+           error: <b>Could not be encrypted.</b>,
+         }
+       );
+      setActiveStep(activeStep + 1);
+    };
   };
 
   const handleBack = () => {

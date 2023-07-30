@@ -6,7 +6,6 @@ import { Checkout } from "../components"
 const CheckoutDetails = () => {
 
     return (
-        // <Checkout/>
         <div>
             <Checkout/>
         </div>
