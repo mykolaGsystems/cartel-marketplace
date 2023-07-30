@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import Link from 'next/link';
+
 import { AiOutlineMinus, AiOutlinePlus, AiOutlineLeft, AiOutlineShopping } from 'react-icons/ai';
 import { TiDeleteOutline } from 'react-icons/ti';
 import toast from 'react-hot-toast';
@@ -8,28 +9,71 @@ import { useStateContext } from '../context/StateContext';
 import { urlFor } from '../lib/client';
 import getStripe from '../lib/getStripe';
 
+import { styled } from "@mui/material/styles";
+import { Container, ButtonGroup, Button, TextField } from "@mui/material";
+import { blueGrey } from "@mui/material/colors";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
+
+const StyledButton = styled(Button)(({ theme }) => ({
+  color: theme.palette.getContrastText(blueGrey[50]),
+  backgroundColor: blueGrey[50],
+  borderColor: blueGrey[200],
+  "&:hover": {
+    backgroundColor: blueGrey[100],
+    borderColor: blueGrey[300]
+  }
+}));
+
+const StyledInput = styled(TextField)({
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderRadius: 0,
+      borderColor: blueGrey[200]
+    },
+    "&:hover fieldset": {
+      borderColor: blueGrey[300]
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: blueGrey[500]
+    },
+    "& input": {
+      textAlign: "center",
+      width: 45,
+      color: blueGrey[700]
+    }
+  }
+});
+
+
 const Cart = () => {
   const cartRef = useRef();
   const { totalPrice, totalQuantities, cartItems, setShowCart, toggleCartItemQuanitity, onRemove } = useStateContext();
 
-  const handleCheckout = async () => {
+  const handleStripeCheckout = async () => {
     const stripe = await getStripe();
 
-    const response = await fetch('/api/stripe', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(cartItems),
-    });
+    // const response = await fetch('/api/stripe', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify(cartItems),
+    // });
 
-    if(response.statusCode === 500) return;
+    // if(response.statusCode === 500) return;
     
-    const data = await response.json();
+    // const data = await response.json();
+    // // console.log(data)
 
-    toast.loading('Redirecting...');
+    // toast.loading('Redirecting...');
 
-    stripe.redirectToCheckout({ sessionId: data.id });
+    // stripe.redirectToCheckout({ sessionId: data.id });
+    console.log(cartItems)
+  }
+
+  const handleNEARPayment = async () => {
+    setShowCart(false)
   }
 
   return (
@@ -71,13 +115,18 @@ const Cart = () => {
                 </div>
                 <div className="flex bottom">
                   <div>
-                  <p className="quantity-desc">
-                    <span className="minus" onClick={() => toggleCartItemQuanitity(item._id, 'dec') }>
-                    <AiOutlineMinus />
-                    </span>
-                    <span className="num" onClick="">{item.quantity}</span>
-                    <span className="plus" onClick={() => toggleCartItemQuanitity(item._id, 'inc') }><AiOutlinePlus /></span>
-                  </p>
+                    <ButtonGroup>
+                      <StyledButton
+                        onClick={() => toggleCartItemQuanitity(item._id, 'dec') }
+                        // disabled={count === 1}
+                      >
+                        <RemoveIcon fontSize="small" />
+                      </StyledButton>
+                      <StyledInput size="small" onClick="" value={item.quantity} />
+                      <StyledButton onClick={() => toggleCartItemQuanitity(item._id, 'inc') }>
+                        <AddIcon fontSize="small" />
+                      </StyledButton>
+                    </ButtonGroup>
                   </div>
                   <button
                     type="button"
@@ -95,12 +144,17 @@ const Cart = () => {
           <div className="cart-bottom">
             <div className="total">
               <h3>Subtotal:</h3>
-              <h3>${totalPrice}</h3>
+              <h3>${ Math.round(totalPrice * 100) / 100}</h3>
             </div>
             <div className="btn-container">
-              <button type="button" className="btn" onClick={handleCheckout}>
+              <button type="button" className="btn" onClick={handleStripeCheckout}>
                 Pay with Stripe
               </button>
+              <Link href="/checkout">
+                <button type="button" className="btn" onClick={handleNEARPayment}>
+                  Pay with NEAR
+                </button>
+              </Link>
             </div>
           </div>
         )}
