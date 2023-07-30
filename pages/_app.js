@@ -6,15 +6,18 @@ import '../styles/globals.css';
 import "@near-wallet-selector/modal-ui/styles.css";
 import { StateContext } from '../context/StateContext';
 import { NearProvider } from '../context/NearContext';
+import { CheckoutContext } from '../context/CheckoutContext';
 
 function MyApp({ Component, pageProps }) {
   return (
     <NearProvider>
       <StateContext>
-        <Layout>
-          <Toaster />
-          <Component {...pageProps} />
-        </Layout>
+        <CheckoutContext>
+          <Layout>
+            <Toaster />
+            <Component {...pageProps} />
+          </Layout>
+        </CheckoutContext>
       </StateContext>
     </NearProvider>
   )

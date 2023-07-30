@@ -10,43 +10,38 @@ import { useStateContext } from '../../context/StateContext';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import { urlFor } from '../../lib/client';
 import Avatar from "@mui/material/Avatar";
+import { useCheckoutContext } from '../../context/CheckoutContext';
 
-const products = [
-  {
-    name: 'Product 1',
-    desc: 'A nice thing',
-    price: '$9.99',
-  },
-  {
-    name: 'Product 2',
-    desc: 'Another thing',
-    price: '$3.45',
-  },
-  {
-    name: 'Product 3',
-    desc: 'Something else',
-    price: '$6.51',
-  },
-  {
-    name: 'Product 4',
-    desc: 'Best thing of all',
-    price: '$14.11',
-  },
-  { name: 'Shipping', desc: '', price: 'Free' },
-];
 
 const addresses = ['1 MUI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
 
 export default function Review() {
   const { accountId } = useNearContext();
   const { totalPrice, totalQuantities, cartItems, setShowCart, toggleCartItemQuanitity, onRemove } = useStateContext();
-  console.log(cartItems, totalPrice, totalQuantities)
+  const { firstName,
+          lastName,
+          email,
+          mobile,
+          address1,
+          address2,
+          city,
+          state,
+          zip,
+          country } = useCheckoutContext();
+
+  const renderAddress = () => {
+    let addresses = [address1, city, zip, country];
+    if(address2 != '') addresses.splice(1, 0, address2);
+    if(state != '') addresses.splice(2,0, state);
+    return addresses.join(', ')
+  };
+
 
   const quantity = (product) => {
     const qty = "Qty: ";
     const field = ` ${qty} ${product.quantity}`;
     return field
-  }
+  };
 
 
   return (
@@ -84,14 +79,17 @@ export default function Review() {
           <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
             Shipping details
           </Typography>
-          <Typography gutterBottom>John Smith</Typography>
-          <Typography gutterBottom>{addresses.join(', ')}</Typography>
+          <Typography gutterBottom>{firstName} {lastName}</Typography>
+          <Typography gutterBottom>{email}</Typography>
+          <Typography gutterBottom>{mobile}</Typography>
+          {/* <Typography gutterBottom>{addresses.join(', ')}</Typography> */}
+          <Typography gutterBottom>{renderAddress()}</Typography>
         </Grid>
         <Grid item xs={12} sm={10}>
           <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
             Payment details
           </Typography>
-          <Typography gutterBottom>NEAR wallet: {accountId}</Typography>
+          <Typography gutterBottom sx={{fontWeight: "bold", fontSize: "16px"}}> NEAR Wallet: {accountId}</Typography>
         </Grid>
       </Grid>
     </React.Fragment>
