@@ -44,7 +44,7 @@ const StyledInput = styled(TextField)({
     },
     "& input": {
       textAlign: "center",
-      width: 60,
+      width: 45,
       color: blueGrey[700]
     }
   }
@@ -94,7 +94,7 @@ const ProductDetails = ({ product, products }) => {
           <Typography variant="h5" 
             sx={{ marginTop: "20px", marginBottom: "20px", fontWeight: "bold", fontSize: "26px", color: blueGrey[900]}}
           >
-            {price}$
+            ${price}
           </Typography>
           <h4>Size: </h4>
           <p className='product-input'>
@@ -111,7 +111,7 @@ const ProductDetails = ({ product, products }) => {
                     sx={{fontSize: "16px",  fontWeight: "bold", 
                         padding: "15px", maxHeight: "40px", 
                         minWidth: "90px", border: "1px solid grey",
-                        color: blueGrey[700],
+                        color: blueGrey[700], textTransform: "lowercase",
                         "&:hover" : {
                           backgroundColor: blueGrey[100],
                           borderColor: blueGrey[300],
@@ -124,7 +124,7 @@ const ProductDetails = ({ product, products }) => {
                       
                       }} 
                   >
-                    {obj}
+                    {obj}G
                   </ToggleButton>
                 )}
               </ToggleButtonGroup>

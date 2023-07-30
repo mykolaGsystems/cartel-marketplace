@@ -5,5 +5,5 @@ export { default as Product } from './Product';
 export { default as HeroBanner } from './HeroBanner';
 export { default as FooterBanner } from './FooterBanner';
 export { default as Cart } from './Cart';
-// export { default as ConnectBtn} from './ConnectBtn';
 export { default as ConnectButton } from './ConnectButton';
+export { default as Checkout } from './Checkout/Checkout';
