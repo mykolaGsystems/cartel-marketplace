@@ -678,6 +678,12 @@ margin-top: 160px;
 .product-max-qty{
   margin-top: 10px;
 }
+.checkout-avatar {
+  width: 70px;
+  height: 90px;
+  border-radius: 4px !important;
+}
+
 
 @media screen and (max-width:800px) {
   .hero-banner-container{
