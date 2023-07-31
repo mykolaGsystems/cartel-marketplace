@@ -122,7 +122,7 @@ const Cart = () => {
                       >
                         <RemoveIcon fontSize="small" />
                       </StyledButton>
-                      <StyledInput size="small" onClick="" value={item.quantity} />
+                      <StyledInput size="small" value={item.quantity} />
                       <StyledButton onClick={() => toggleCartItemQuanitity(item._id, 'inc') }>
                         <AddIcon fontSize="small" />
                       </StyledButton>

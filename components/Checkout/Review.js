@@ -36,7 +36,6 @@ export default function Review() {
     return addresses.join(', ')
   };
 
-
   const quantity = (product) => {
     const qty = "Qty: ";
     const field = ` ${qty} ${product.quantity}`;
@@ -53,15 +52,12 @@ export default function Review() {
         {cartItems.map((product) => (
           <ListItem key={product._id} sx={{ py: 1, px: 0 }}>
            <ListItemAvatar sx={{marginRight: "20px"}}>
-              <Avatar
-               alt="Pic" 
-               sx = {{
-                width: "70px",
-                height: "90px",
-                borderRadius: "4px !important",
-               }}
-               src={urlFor(product?.image[0])}
-               shape="" />
+              <img 
+                className='checkout-avatar'
+                alt="pci"
+                src={urlFor(product?.image[0])}
+                shape="" 
+              />
              </ListItemAvatar>
             <ListItemText primary={product.name} secondary={quantity(product)}/>
             <Typography variant="body2">${product.price} </Typography>

@@ -8,6 +8,8 @@ import { StateContext } from '../context/StateContext';
 import { NearProvider } from '../context/NearContext';
 import { CheckoutContext } from '../context/CheckoutContext';
 
+import NextNProgress from 'nextjs-progressbar';
+
 function MyApp({ Component, pageProps }) {
   return (
     <NearProvider>
@@ -15,6 +17,7 @@ function MyApp({ Component, pageProps }) {
         <CheckoutContext>
           <Layout>
             <Toaster />
+            <NextNProgress color="#29D" startPosition={0.3} stopDelayMs={200} height={10} showOnShallow={true} />
             <Component {...pageProps} />
           </Layout>
         </CheckoutContext>

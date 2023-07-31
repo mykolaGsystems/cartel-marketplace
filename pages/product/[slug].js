@@ -97,7 +97,7 @@ const ProductDetails = ({ product, products }) => {
             ${price}
           </Typography>
           <h4>Size: </h4>
-          <p className='product-input'>
+          <Box sx={{ marginBottom: "20px", marginTop:"10px"}}>
             <Stack direction="row" spacing={1}>
               <ToggleButtonGroup
                 value={selectedSize}
@@ -121,17 +121,17 @@ const ProductDetails = ({ product, products }) => {
                           color: "white",
                           backgroundColor: blueGrey[600]
                         }
-                      
                       }} 
                   >
-                    {obj}G
+                    {obj}g
                   </ToggleButton>
                 )}
               </ToggleButtonGroup>
             </Stack>
-          </p>
+          </Box>
+
           <h4>Grind: </h4>
-          <p className='product-input'>
+          <Box sx={{ marginBottom: "20px", marginTop:"10px"}}>
             <Stack direction="row" spacing={1}>
               <ToggleButtonGroup
                   value={selectedGrind}
@@ -163,11 +163,11 @@ const ProductDetails = ({ product, products }) => {
                   )}
               </ToggleButtonGroup>
             </Stack>
-          </p>
+          </Box>
 
           {/* <div className="quantity"> */}
             <h4>Quantity:</h4>
-            <p className='product-input'>
+            <Box sx={{ marginBottom: "20px", marginTop:"10px"}}>
               <ButtonGroup>
                   <StyledButton
                     onClick={decQty}
@@ -180,13 +180,13 @@ const ProductDetails = ({ product, products }) => {
                     <AddIcon fontSize="small" />
                   </StyledButton>
                 </ButtonGroup>
-            </p>
+            </Box>
            
         
           <h4>Details: </h4>
           <p className='product-input'>{details}</p>
 
-          <p className='product-input'>
+          <Box sx={{ marginBottom: "20px", marginTop:"10px"}}>
             <Box component="div" sx={{ display: 'inline', fontStyle: 'italic' }} >Process:</Box>
             <Stack direction="row"  sx={{display: 'inline', marginLeft: "6px"}} spacing={1}>
         
@@ -194,8 +194,8 @@ const ProductDetails = ({ product, products }) => {
                 <Chip key={i} size="small" variant="filled" sx={{fontSize: "16px", padding: "10px"}} label={obj} />
               )}
             </Stack>
-          </p>
-          <p className='product-input'>
+          </Box>
+          <Box sx={{ marginBottom: "20px", marginTop:"10px"}}>
             <Box component="div" sx={{ display: 'inline', fontStyle: 'italic' }} >Notes:</Box>
             <Stack direction="row"  sx={{display: 'inline', marginLeft: "6px"}} spacing={1}>
         
@@ -203,8 +203,8 @@ const ProductDetails = ({ product, products }) => {
                 <Chip key={i} size="small" variant="filled" sx={{fontSize: "16px", padding: "10px"}} label={obj} />
               )}
             </Stack>
-          </p>
-          <p className='product-input'>
+          </Box>
+          <Box sx={{ marginBottom: "20px", marginTop:"10px"}}>
             <Box component="div" sx={{ display: 'inline', fontStyle: 'italic' }} >Origins:</Box>
             <Stack direction="row"  sx={{display: 'inline', marginLeft: "6px"}} spacing={1}>
         
@@ -212,13 +212,13 @@ const ProductDetails = ({ product, products }) => {
                 <Chip key={i} size="small" variant="filled" sx={{fontSize: "16px", padding: "10px"}} label={obj} />
               )}
             </Stack>
-          </p>
-          <p>
+          </Box>
+          <Box>
             <Box component="div" sx={{ display: 'inline', fontStyle: 'italic' }} >Roast Depth:</Box>
             <Stack direction="row"  sx={{display: 'inline', marginLeft: "6px"}} spacing={1}>    
                 <Chip size="small" variant="filled" sx={{fontSize: "16px", padding: "10px"}} label={roastDepth} />
             </Stack>
-          </p>
+          </Box>
 
           <div className="buttons">
             <button type="button" className="add-to-cart" onClick={() => onAdd(product, qty)}>Add to Cart</button>
