@@ -27,8 +27,8 @@ import { setupMeteorWallet } from "@near-wallet-selector/meteor-wallet";
 import { setupMyNearWallet } from "@near-wallet-selector/my-near-wallet";
 // import { MARKETPLACE_CONTRACT, NETWORK_ID, NFT_CONTRACT } from "../lib/env";
 
-const NETWORK_ID = "mainnet"
-const MARKETPLACE_CONTRACT = "token.elcafecartel.near"
+const NETWORK_ID = "testnet"
+const MARKETPLACE_CONTRACT = "dev-1690832838546-52413979946374"
 
 type Account = {
 	accountId: string;
@@ -96,6 +96,7 @@ export const NearProvider = ({ children }: NearProviderProps) => {
 	const [modal, setModal] = useState<WalletSelectorModal | null>(null);
 	const [accounts, setAccounts] = useState<Account[]>([]);
 	const [isBrowserWallet, setIsBrowserWallet] = useState<boolean | null>(null);
+
 	const init = useCallback(async () => {
 		const _selector = await setupWalletSelector({
 			network: NETWORK_ID,
@@ -155,8 +156,8 @@ export const NearProvider = ({ children }: NearProviderProps) => {
 		return null;
 	}
 
-	const accountId =
-		accounts.find((account) => account.active)?.accountId || null;
+	const accountId = accounts.find((account) => account.active)?.accountId || null;
+
 	async function viewMethod(contractId: string, methodName: string, args: {}) {
 		if (!selector) return;
 

@@ -1,9 +1,16 @@
-import * as React from 'react';
+import  React, {
+	createContext,
+	useContext,
+	useEffect,
+	useState,
+	useCallback,
+} from "react";
 import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
 
 import { useNearContext } from "../../context/NearContext"
 import { useStateContext } from '../../context/StateContext'; 
@@ -12,11 +19,16 @@ import { urlFor } from '../../lib/client';
 import Avatar from "@mui/material/Avatar";
 import { useCheckoutContext } from '../../context/CheckoutContext';
 
+import { NearLogo } from '../NearLogo';
+
+const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_NEAR_PRICE_CONTRACT_ADDRESS;
 
 const addresses = ['1 MUI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
 
 export default function Review() {
-  const { accountId } = useNearContext();
+
+  const { accountId, viewMethod } = useNearContext();
+  const [ nearTotalPrice, setNearTotalPrice] = React.useState('');
   const { totalPrice, totalQuantities, cartItems, setShowCart, toggleCartItemQuanitity, onRemove } = useStateContext();
   const { firstName,
           lastName,
@@ -29,6 +41,20 @@ export default function Review() {
           zip,
           country } = useCheckoutContext();
 
+// Fetch NEAR Price
+  const getServerSideProps = async () => {
+      const data = await viewMethod("priceoracle.testnet", "get_asset", { asset_id : "wrap.testnet" });
+      const nearPrice = (parseFloat(data["emas"][0]["price"]["multiplier"]) / 100000000).toFixed(8);
+      console.log("Current near price", nearPrice);
+      setNearTotalPrice((totalPrice/nearPrice).toFixed(3));
+  };
+
+  useEffect(async () => {
+    getServerSideProps();
+  }, []);
+
+
+        
   const renderAddress = () => {
     let addresses = [address1, city, zip, country];
     if(address2 != '') addresses.splice(1, 0, address2);
@@ -41,7 +67,6 @@ export default function Review() {
     const field = ` ${qty} ${product.quantity}`;
     return field
   };
-
 
   return (
     <React.Fragment>
@@ -64,11 +89,11 @@ export default function Review() {
           </ListItem>
         ))}
         <ListItem sx={{ py: 1, px: 0 }}>
-          <ListItemText primary="Subtotal" />
-          <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-          ${ Math.round(totalPrice * 100) / 100} 
-          </Typography>
-        </ListItem>
+          <ListItemText primary="Subtotal"/>
+            <Typography variant="subtitle1" sx={{fontWeight: 700 }}>
+              ${ Math.round(totalPrice * 100) / 100} ~  <NearLogo /> {nearTotalPrice}
+            </Typography>
+          </ListItem>
       </List>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={10}>
