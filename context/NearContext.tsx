@@ -203,7 +203,7 @@ export const NearProvider = ({ children }: NearProviderProps) => {
 					{
 						type: "FunctionCall",
 						params: {
-							methodName: param.methodName || "add_message",
+							methodName: param.methodName,
 							args: param.args || {},
 							gas: param.gas ? param.gas : "250000000000000",
 							deposit: param.amount ? param.amount.toString() : "0",
