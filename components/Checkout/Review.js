@@ -48,7 +48,7 @@ export default function Review() {
 
   useEffect(async () => {
     await getServerSideProps();
-  }, []);
+  }, [totalPrice]);
 
 
         
