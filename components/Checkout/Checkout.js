@@ -17,9 +17,12 @@ import Review from './Review';
 
 import { encodeData }  from "../../lib/services";
 import { useCheckoutContext } from '../../context/CheckoutContext';
+import { useNearContext } from "../../context/NearContext"
 import { toast } from 'react-hot-toast';
+import { utils } from 'near-api-js'
 
 const steps = ['Shipping address', 'Review your order'];
+const MARKETPLACE_ADDRESS = process.env.NEXT_PUBLIC_MARKETPLACE_CONTRACT_ADDRESS;
 
 function getStepContent(step) {
   switch (step) {
@@ -34,11 +37,30 @@ function getStepContent(step) {
   }
 }
 
+
+
 export default function Checkout() {
   const [activeStep, setActiveStep] = React.useState(0);
+  const { accountId, viewMethod, callMethods } = useNearContext();
   const { firstName, lastName, email, 
           mobile, address1,  address2, 
-          city, state, zip, country } = useCheckoutContext();
+          city, state, zip, country, updateEncrypted, encrypted, nearTotalPrice } = useCheckoutContext();
+
+  const nearPay = async () => {
+    let deposit = utils.format.parseNearAmount(nearTotalPrice.toString());
+    let response = await callMethods([
+      {
+        contractId: MARKETPLACE_ADDRESS,
+        methodName: "confirm_purchase",
+        args : {
+          "encoded_message" : encrypted, "items" : [["1", 1]]
+        },
+        gas: "250000000000000",
+        amount: deposit
+      }
+    ]);
+    console.log(response);
+  };
 
   const handleNext = async () => {
     
@@ -61,14 +83,18 @@ export default function Checkout() {
 
     required.forEach((field) => {
       if(request[field] == ''){
-        toast.error(`Error. Field is empty: ${field}`);
+        toast.error(`Error. Field ${field} is empty;`);
         validation = false;
       };
     });
     
     if(validation){
       toast.promise(
-        encodeData(request),
+        encodeData(request)
+        .then((response) => {
+          updateEncrypted(response);
+          console.log("Encrypted Updated");
+        }),
          {
            loading: 'Encrypting User Data...',
            success: <b>Encryption successful!</b>,
@@ -122,7 +148,14 @@ export default function Checkout() {
 
                 <Button
                   variant="contained"
-                  onClick={handleNext}
+                  onClick={() => {
+                    if(activeStep === steps.length - 1){
+                      nearPay();
+                    }else {
+                      handleNext();
+                    }
+               
+                  }}
                   sx={{ mt: 3, ml: 1 }}
                 >
                   {activeStep === steps.length - 1 ? 'Place order' : 'Next'}

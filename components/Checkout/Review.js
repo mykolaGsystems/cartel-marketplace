@@ -18,17 +18,14 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import { urlFor } from '../../lib/client';
 import Avatar from "@mui/material/Avatar";
 import { useCheckoutContext } from '../../context/CheckoutContext';
-
 import { NearLogo } from '../NearLogo';
 
 const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_NEAR_PRICE_CONTRACT_ADDRESS;
 
-const addresses = ['1 MUI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
-
 export default function Review() {
 
-  const { accountId, viewMethod } = useNearContext();
-  const [ nearTotalPrice, setNearTotalPrice] = React.useState('');
+  const { accountId, viewMethod, callMethods } = useNearContext();
+  // const [ nearTotalPrice, setNearTotalPrice] = React.useState('');
   const { totalPrice, totalQuantities, cartItems, setShowCart, toggleCartItemQuanitity, onRemove } = useStateContext();
   const { firstName,
           lastName,
@@ -39,18 +36,18 @@ export default function Review() {
           city,
           state,
           zip,
-          country } = useCheckoutContext();
+          country, encrypted ,nearTotalPrice, updateNearTotalPrice } = useCheckoutContext();
 
 // Fetch NEAR Price
   const getServerSideProps = async () => {
       const data = await viewMethod("priceoracle.testnet", "get_asset", { asset_id : "wrap.testnet" });
       const nearPrice = (parseFloat(data["emas"][0]["price"]["multiplier"]) / 100000000).toFixed(8);
       console.log("Current near price", nearPrice);
-      setNearTotalPrice((totalPrice/nearPrice).toFixed(3));
+      updateNearTotalPrice((totalPrice/nearPrice).toFixed(3));
   };
 
   useEffect(async () => {
-    getServerSideProps();
+    await getServerSideProps();
   }, []);
 
 

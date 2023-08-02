@@ -13,8 +13,18 @@ export const CheckoutContext = ({ children }) => {
   const [state, setState] = React.useState('South Yorkshine');
   const [zip, setZip] = React.useState('S3 7HZ');
   const [country, setCountry] = React.useState('UK');
+  const [encrypted, setEncrypted] = React.useState('');
+  const [nearTotalPrice, setNearTotalPrice] = React.useState('');
 
   // Define individual functions to update each state variable
+  const updateNearTotalPrice = (value) => {
+    setNearTotalPrice(value);
+  };
+
+  const updateEncrypted = (value) => {
+    setEncrypted(value);
+  };
+
   const updateFirstName = (value) => {
     setFirstName(value);
   };
@@ -68,6 +78,8 @@ export const CheckoutContext = ({ children }) => {
         state,
         zip,
         country,
+        encrypted,
+        nearTotalPrice,
         updateFirstName,
         updateLastName,
         updateEmail,
@@ -78,6 +90,8 @@ export const CheckoutContext = ({ children }) => {
         updateState,
         updateZip,
         updateCountry,
+        updateEncrypted,
+        updateNearTotalPrice,
       }}
     >
       {children}
