@@ -5,13 +5,29 @@ const Context = createContext();
 
 export const StateContext = ({ children }) => {
   const [showCart, setShowCart] = useState(false);
-  const [cartItems, setCartItems] = useState([]);
-  const [totalPrice, setTotalPrice] = useState(0);
-  const [totalQuantities, setTotalQuantities] = useState(0);
-  const [qty, setQty] = useState(1);
+  const [cartItems, setCartItems] = useState(
+    JSON.parse(localStorage.getItem('cartItems')) || []
+  );
+  const [totalPrice, setTotalPrice] = useState(
+    JSON.parse(localStorage.getItem('totalPrice')) || 0
+  );
+  const [totalQuantities, setTotalQuantities] = useState(
+    JSON.parse(localStorage.getItem('totalQuantities')) || 0
+  );
+  const [qty, setQty] = useState(
+    JSON.parse(localStorage.getItem('qty')) || 1
+  );
+
 
   let foundProduct;
   let index;
+
+  useEffect(() => {
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    localStorage.setItem('totalPrice', JSON.stringify(totalPrice));
+    localStorage.setItem('totalQuantities', JSON.stringify(totalQuantities));
+    localStorage.setItem('qty', JSON.stringify(qty));
+  }, [cartItems, totalPrice, totalQuantities, qty]);
 
   const onAdd = (product, quantity) => {
     const checkProductInCart = cartItems.find((item) => item._id === product._id);
