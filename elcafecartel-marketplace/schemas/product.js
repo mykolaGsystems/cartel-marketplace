@@ -31,11 +31,34 @@ export default {
       title: 'Price',
       type: 'number',
     },
-    { 
-      name: 'size',
-      title: 'Size',
-      type: 'array',
-      of: [{ type: 'number'}]
+    {
+      name: 'price_per_grams',
+      title: 'Price for Grams',
+      type: 'object',
+      fields: [
+        {
+          name: 'stock',
+          title: 'Stock',
+          type: 'array',
+          of: [
+            {
+              type: 'object',
+              fields: [
+                {
+                  name: 'grams',
+                  title: 'Grams',
+                  type: 'number',
+                },
+                {
+                  name: 'price',
+                  title: 'Price',
+                  type: 'number',
+                },
+              ],
+            },
+          ],
+        },
+      ],
     },
     {
       name: 'grind',

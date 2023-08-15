@@ -15,10 +15,16 @@ export const CheckoutContext = ({ children }) => {
   const [country, setCountry] = React.useState('UK');
   const [encrypted, setEncrypted] = React.useState('');
   const [nearTotalPrice, setNearTotalPrice] = React.useState('');
+  const [deliveryRegion, setDeliveryRegion] = React.useState('');
+  const [totalDeliveryPrice, setTotalDeliveryPrice] = React.useState('');
 
   // Define individual functions to update each state variable
   const updateNearTotalPrice = (value) => {
     setNearTotalPrice(value);
+  };
+
+  const updateTotalDeliveryPrice = (value) => {
+    setTotalDeliveryPrice(value);
   };
 
   const updateEncrypted = (value) => {
@@ -65,6 +71,10 @@ export const CheckoutContext = ({ children }) => {
     setCountry(value);
   };
 
+  const updateDeliveryRegion = (value) => {
+    setDeliveryRegion(value);
+  };
+
   return (
     <Context.Provider
       value={{
@@ -80,6 +90,8 @@ export const CheckoutContext = ({ children }) => {
         country,
         encrypted,
         nearTotalPrice,
+        deliveryRegion,
+        totalDeliveryPrice,
         updateFirstName,
         updateLastName,
         updateEmail,
@@ -92,6 +104,8 @@ export const CheckoutContext = ({ children }) => {
         updateCountry,
         updateEncrypted,
         updateNearTotalPrice,
+        updateDeliveryRegion,
+        updateTotalDeliveryPrice,
       }}
     >
       {children}

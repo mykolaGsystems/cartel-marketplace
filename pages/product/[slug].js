@@ -17,6 +17,7 @@ import DoneIcon from '@mui/icons-material/Done';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Typography from '@mui/material/Typography';
+import { toast } from 'react-hot-toast';
 
 
 const StyledButton = styled(Button)(({ theme }) => ({
@@ -51,7 +52,7 @@ const StyledInput = styled(TextField)({
 });
 
 const ProductDetails = ({ product, products }) => {
-  const { image, name, details, price, size, grind, process, notes, origins, roastDepth, } = product;
+  const { image, name, details, price, size, grind, process, notes, origins, roastDepth, price_per_grams } = product;
   const [index, setIndex] = useState(0);
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedGrind, setSelectedGrind] = useState(null);
@@ -62,12 +63,29 @@ const ProductDetails = ({ product, products }) => {
     setShowCart(true);
   }
 
-  const sizeSelect = (event, selected_grams) => {
-    setSelectedSize(selected_grams);
+  const sizeSelect = (event, selected_size) => {
+    setSelectedSize(selected_size);
+    if(selected_size !== null){
+      product["size_selected"] = selected_size["grams"];
+      product["price"] = selected_size["price"];
+     
+    };
+   
   };
 
   const grindSelect = (event, selected_grind) => {
     setSelectedGrind(selected_grind);
+    product["grind_selected"] = selected_grind;
+  };
+
+  const val_onAdd = () => {
+    if( selectedGrind == null){
+      toast.error("Please select Grind type before continuing");
+    } else if ( selectedSize == null) {
+      toast.error("Please select Size before continuing");
+    } else {
+      onAdd(product, qty);
+    }
   };
 
   return (
@@ -91,9 +109,7 @@ const ProductDetails = ({ product, products }) => {
 
         <div className="product-detail-desc">
           <h1>{name}</h1>
-          <Typography variant="h5" 
-            sx={{ marginTop: "20px", marginBottom: "20px", fontWeight: "bold", fontSize: "26px", color: blueGrey[900]}}
-          >
+          <Typography variant="h5" sx={{ marginTop: "20px", marginBottom: "20px", fontWeight: "bold", fontSize: "26px", color: blueGrey[900]}}>
             ${price}
           </Typography>
           <h4>Size: </h4>
@@ -104,7 +120,7 @@ const ProductDetails = ({ product, products }) => {
                 exclusive
                 onChange={sizeSelect}
               >
-                {size.map((obj, i) => 
+                {price_per_grams["stock"].map((obj, i) => 
                   <ToggleButton
                     key={i} 
                     value={obj}
@@ -123,7 +139,7 @@ const ProductDetails = ({ product, products }) => {
                         }
                       }} 
                   >
-                    {obj}g
+                    {obj["grams"]}g
                   </ToggleButton>
                 )}
               </ToggleButtonGroup>
@@ -221,7 +237,8 @@ const ProductDetails = ({ product, products }) => {
           </Box>
 
           <div className="buttons">
-            <button type="button" className="add-to-cart" onClick={() => onAdd(product, qty)}>Add to Cart</button>
+            <button type="button" className="add-to-cart" onClick={() => val_onAdd()} > Add to Cart </button>
+            {/* <button type="button" className="add-to-cart" onClick={() => onAdd(product, qty)} > Add to Cart </button> */}
             <button type="button" className="buy-now" onClick={handleBuyNow}>Buy Now</button>
           </div>
         </div>
@@ -246,8 +263,7 @@ export const getStaticPaths = async () => {
     slug {
       current
     }
-  }
-  `;
+  }`;
 
   const products = await client.fetch(query);
 
@@ -270,7 +286,8 @@ export const getStaticProps = async ({ params: { slug }}) => {
   const product = await client.fetch(query);
   const products = await client.fetch(productsQuery);
 
-  console.log(product);
+  product["size_selected"] = null;
+  product["grind_selected"] = null;
 
   return {
     props: { products, product }

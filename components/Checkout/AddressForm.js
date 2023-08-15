@@ -7,66 +7,78 @@ import Checkbox from '@mui/material/Checkbox';
 
 import { useCheckoutContext } from '../../context/CheckoutContext';
 
-export default function AddressForm() {
-  const [emailError, setEmailError] = React.useState('');
-  const [mobileError, setMobileError] = React.useState('');
-  const {
-    firstName,
-    updateFirstName,
-    lastName,
-    updateLastName,
-    email,
-    updateEmail,
-    mobile,
-    updateMobile,
-    address1,
-    updateAddress1,
-    address2,
-    updateAddress2,
-    city,
-    updateCity,
-    state,
-    updateState,
-    zip,
-    updateZip,
-    country,
-    updateCountry,
-  } = useCheckoutContext();
+import InputLabel from '@mui/material/InputLabel';
+  import MenuItem from '@mui/material/MenuItem';
+  import FormHelperText from '@mui/material/FormHelperText';
+  import FormControl from '@mui/material/FormControl';
+  import Select, { SelectChangeEvent } from '@mui/material/Select';
 
-  const isEmailValid = (value) => {
-    // Basic email format validation using regex
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(value);
-  };
+  const AddressForm = ({ delivery_options }) => {
+    const [emailError, setEmailError] = React.useState('');
+    const [mobileError, setMobileError] = React.useState('');
+    const [region_selected, setRegion] = React.useState('');
+    const {
+      firstName,
+      updateFirstName,
+      lastName,
+      updateLastName,
+      email,
+      updateEmail,
+      mobile,
+      updateMobile,
+      address1,
+      updateAddress1,
+      address2,
+      updateAddress2,
+      city,
+      updateCity,
+      state,
+      updateState,
+      zip,
+      updateZip,
+      country,
+      updateCountry,
+      updateDeliveryRegion,
+      deliveryRegion
+    } = useCheckoutContext();
 
-  const isMobileValid = (value) => {
-    // Phone validation to allow only numbers
-    const mobileRegex = /^[0-9]*$/;
-    return mobileRegex.test(value);
-  };
-  
-  const handleMobileChange = (event) => {
-    const value = event.target.value;
-    updateMobile(value);
-    // Perform mobile validation here
-    if (value && !isMobileValid(value)) {
-      setMobileError('Invalid mobile format');
-    } else {
-      setMobileError('');
-    }
-  };
+    const handleChange = (event) => {
+      updateDeliveryRegion(event.target.value);
+    };
 
+    const isEmailValid = (value) => {
+      // Basic email format validation using regex
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(value);
+    };
 
-  const handleEmailChange = (event) => {
-    const value = event.target.value;
-    updateEmail(value);
-    // Perform email validation here
-    if (value && !isEmailValid(value)) {
-      setEmailError('Invalid email format');
-    } else {
-      setEmailError('');
-    }
-  };
+    const isMobileValid = (value) => {
+      // Phone validation to allow only numbers
+      const mobileRegex = /^[0-9]*$/;
+      return mobileRegex.test(value);
+    };
+    
+    const handleMobileChange = (event) => {
+      const value = event.target.value;
+      updateMobile(value);
+      // Perform mobile validation here
+      if (value && !isMobileValid(value)) {
+        setMobileError('Invalid mobile format');
+      } else {
+        setMobileError('');
+      }
+    };
+
+    const handleEmailChange = (event) => {
+      const value = event.target.value;
+      updateEmail(value);
+      // Perform email validation here
+      if (value && !isEmailValid(value)) {
+        setEmailError('Invalid email format');
+      } else {
+        setEmailError('');
+      }
+    };  
 
   return (
     <React.Fragment>
@@ -206,6 +218,36 @@ export default function AddressForm() {
           />
         </Grid>
       </Grid>
+
+      {/* Delivery Section  */}
+
+      <Typography variant="h6" sx={{marginTop: "25px"}} gutterBottom>
+        Delivery options
+      </Typography>
+      <Grid item xs={12} sx={{marginTop:"15px"}}>
+        <FormControl sx={{  minWidth: "100%" }}>
+          <InputLabel id="demo-simple-select-helper-label">Select delivery region</InputLabel>
+          <Select
+            labelId="demo-simple-select-helper-label"
+            id="demo-simple-select-helper"
+            value={deliveryRegion}
+            label="Select delivery region"
+            onChange={handleChange}
+          >
+            {delivery_options?.map((option) => 
+              <MenuItem 
+                key={option._id}
+                value={option}
+              >
+                {option["region"]}
+              </MenuItem>)}
+          </Select>
+        </FormControl>
+      </Grid>
     </React.Fragment>
   );
 }
+
+
+
+export default AddressForm;

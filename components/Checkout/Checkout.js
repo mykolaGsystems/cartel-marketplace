@@ -1,4 +1,4 @@
-import * as React from 'react';
+import  React, { useEffect, useState } from "react";
 import CssBaseline from '@mui/material/CssBaseline';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -21,34 +21,57 @@ import { useNearContext } from "../../context/NearContext"
 import { toast } from 'react-hot-toast';
 import { utils } from 'near-api-js'
 
+import { useRouter } from 'next/router';
+
 const steps = ['Shipping address', 'Review your order'];
 const MARKETPLACE_ADDRESS = process.env.NEXT_PUBLIC_MARKETPLACE_CONTRACT_ADDRESS;
 
-function getStepContent(step) {
+function getStepContent(step, delivery_options) {
   switch (step) {
     case 0:
-      return <AddressForm />;
+      return <AddressForm delivery_options={delivery_options}/>;
     // case 1:
     //   return <PaymentForm />;
     case 1:
       return <Review />;
     default:
       throw new Error('Unknown step');
-  }
-}
+  };
+};
+
+export default function Checkout({ delivery_options }) {
+  const router = useRouter();
+  const [activeStep, setActiveStep] = useState(0);
+  const { accountId, viewMethod, callMethods, getTransactionResult } = useNearContext();
+  const [ hash, setHash ] = React.useState('');
 
 
 
-export default function Checkout() {
-  const [activeStep, setActiveStep] = React.useState(0);
-  const { accountId, viewMethod, callMethods } = useNearContext();
   const { firstName, lastName, email, 
           mobile, address1,  address2, 
-          city, state, zip, country, updateEncrypted, encrypted, nearTotalPrice } = useCheckoutContext();
+          city, state, zip, country, updateEncrypted, encrypted, nearTotalPrice, deliveryRegion } = useCheckoutContext();
 
-  const nearPay = async () => {
-    let deposit = utils.format.parseNearAmount(nearTotalPrice.toString());
-    let response = await callMethods([
+  useEffect( async () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const txhash = urlParams.get("transactionHashes");
+    if(txhash !== null){
+      let result = await getTransactionResult(txhash);
+      console.log("rez", result)
+      // if(result.transaction_outcome.outcome){
+      //   console.log("he")
+      // };
+      // console.log(result)
+    };
+
+  },[hash]);
+
+
+
+  const nearPay = async () => { 
+
+    let deposit = utils.format.parseNearAmount("1"); //nearTotalPrice.toString()
+    // let deposit = utils.format.parseNearAmount(nearTotalPrice.toString());
+    await callMethods([
       {
         contractId: MARKETPLACE_ADDRESS,
         methodName: "confirm_purchase",
@@ -56,10 +79,10 @@ export default function Checkout() {
           "encoded_message" : encrypted, "items" : [["1", 1]]
         },
         gas: "250000000000000",
-        amount: deposit
-      }
+        amount: deposit      }
     ]);
-    console.log(response);
+
+    // router.push("/confirmation");
   };
 
   const handleNext = async () => {
@@ -77,16 +100,24 @@ export default function Checkout() {
       "State": state,
       "Postcode": zip,
       "Country": country,
+      "DeliveryRegion" : deliveryRegion["code"],
     };
 
     let validation = true;
 
+    // Check if all the field are selected
     required.forEach((field) => {
       if(request[field] == ''){
         toast.error(`Error. Field ${field} is empty;`);
         validation = false;
       };
     });
+
+    // Check if the delivery is selected
+    if(deliveryRegion == ''){
+      toast.error(`Error. Please select the Delivery Region;`);
+      validation = false;
+    };
     
     if(validation){
       toast.promise(
@@ -138,7 +169,7 @@ export default function Checkout() {
             </React.Fragment>
           ) : (
             <React.Fragment>
-              {getStepContent(activeStep)}
+              {getStepContent(activeStep, delivery_options)}
               <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
                 {activeStep !== 0 && (
                   <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
