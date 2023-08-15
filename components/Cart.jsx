@@ -110,7 +110,14 @@ const Cart = () => {
               <img src={urlFor(item?.image[0])} className="cart-product-image" />
               <div className="item-desc">
                 <div className="flex top">
-                  <h5>{item.name}</h5>
+
+                  <div> 
+                      <h5>{item.name}</h5>
+                      <p style={{fontSize: "18px", marginTop: "8px"}}>Size: {item.size_selected}g</p>
+                      <p style={{fontSize: "18px", marginTop: "8px"}}>Grind: {item.grind_selected}</p>
+                  </div>
+               
+                  {/* <h5>{item.size_selected}</h5> */}
                   <h4>${item.price}</h4>
                 </div>
                 <div className="flex bottom">

@@ -390,12 +390,13 @@ padding: 20px 10px;
 }
 .product{
   display: flex;
- gap: 30px;
+  gap: 30px;
   padding: 20px;
+  /* background-color: lightblue; */
 }
 .product .cart-product-image{
-  width:120px ;
-  height: 150px;
+  width:150px ;
+  height: 200px;
   border-radius: 15px;
  background-color: #ebebeb;
 }
@@ -403,11 +404,12 @@ padding: 20px 10px;
   display: flex;
   justify-content: space-between;
   width: 350px;
-   color: #324d67;
+  /* color: #324d67; */
+  
 
 }
 .item-desc .bottom{
-  margin-top: 60px;
+  margin-top: 72px;
 }
 .flex h5{
   font-size: 24px;
