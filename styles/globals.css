@@ -59,12 +59,6 @@ width: 100%;
   cursor: pointer;
 }
 
-.logo-img-near {
-  max-width: 125px;
-  /* align-items: center; */
-  /* width: 50%; */
-  /* margin: 0 20px; */
-}
 
 .cart-icon{
   font-size: 25px;
@@ -458,9 +452,18 @@ padding: 30px 65px;
   background-color: #f02d34;
   color: #fff;
   cursor: pointer;
-    transform: scale(1, 1);
+  transform: scale(1, 1);
   transition: transform 0.5s ease;
+
 }
+
+button:disabled,
+button[disabled]{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+}
+
 .btn:hover{
   transform: scale(1.1,1.1);
 }
@@ -836,5 +839,17 @@ margin-top: 160px;
 .btn-container{
   width: 300px;
   margin: auto;
+}
+
+@media only screen and (max-width: 600px) {
+    .logo-img {
+      max-width: 70px;
+    }
+
+    .hero-banner-container{
+      /* padding: 100px 40px; */
+      max-height: 100px;
+      background-size: contain, cover;
+    }
 }
 }

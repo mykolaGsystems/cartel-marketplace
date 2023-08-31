@@ -29,16 +29,11 @@ const Navbar = () => {
         
       <Link href="/">
         <div className='row'>
-          {/* <img src={'../static/logo_b.png'} alt="" className='logo-img'></img> */}
           <img src={'../static/ecc_logo_plain.png'} alt="" className='logo-img'></img>
           <VscClose/>
           <img src={'../static/near.png'} alt="" className='logo-img'></img>
         </div>
         </Link>
-
-        {/* <Link href="/">
-          <img src={'../static/logo_b.png'} alt="" className='logo-img'></img>
-        </Link> */}
 
         <Stack spacing={2} direction="row">
           
