@@ -114,8 +114,8 @@ const Cart = () => {
 
                   <div> 
                       <h5>{item.name}</h5>
-                      <p style={{fontSize: "18px", marginTop: "8px"}}>Size: {item.size_selected}g</p>
-                      <p style={{fontSize: "18px", marginTop: "8px"}}>Grind: {item.grind_selected}</p>
+                      <p className='item-desc-params'>Size: {item.size_selected}g</p>
+                      <p className='item-desc-params'>Grind: {item.grind_selected}</p>
                   </div>
                
                   {/* <h5>{item.size_selected}</h5> */}

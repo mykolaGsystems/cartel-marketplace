@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { AiOutlineShopping } from 'react-icons/ai'
 
-import { Cart } from './';
+import { Cart } from '.';
 import { useStateContext} from '../context/StateContext';
 import { VscClose } from 'react-icons/vsc'
 
@@ -15,7 +15,7 @@ import { useNearContext } from "../context/NearContext"
 // import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
-import ConnectButton from '../components/ConnectButton'
+import ConnectButton from './ConnectButton'
 
 
 

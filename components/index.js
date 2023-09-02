@@ -7,3 +7,5 @@ export { default as FooterBanner } from './FooterBanner';
 export { default as Cart } from './Cart';
 export { default as ConnectButton } from './ConnectButton';
 export { default as Checkout } from './Checkout/Checkout';
+
+export { default as Navbarv2 } from './Navbar_v2';

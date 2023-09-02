@@ -25,7 +25,12 @@ import { setupNearWallet } from "@near-wallet-selector/near-wallet";
 import { setupSender } from "@near-wallet-selector/sender";
 import { setupMeteorWallet } from "@near-wallet-selector/meteor-wallet";
 import { setupMyNearWallet } from "@near-wallet-selector/my-near-wallet";
+import { setupLedger } from "@near-wallet-selector/ledger"
+import { setupHereWallet } from "@near-wallet-selector/here-wallet";
 // import { MARKETPLACE_CONTRACT, NETWORK_ID, NFT_CONTRACT } from "../lib/env";
+
+import LedgerIconUrl from '@near-wallet-selector/ledger/assets/ledger-icon.png';
+import MyNearIconUrl from '@near-wallet-selector/my-near-wallet/assets/my-near-wallet-icon.png';
 
 const NETWORK_ID = "testnet"
 const MARKETPLACE_CONTRACT = "dev-1690832838546-52413979946374"
@@ -106,6 +111,8 @@ export const NearProvider = ({ children }: NearProviderProps) => {
 				setupMeteorWallet(),
 				setupNearWallet(),
                 setupMyNearWallet(),
+				setupLedger({ iconUrl: LedgerIconUrl }),
+				setupHereWallet(),
 				...(await setupDefaultWallets()),
 			],
 		});
