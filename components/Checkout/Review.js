@@ -175,7 +175,7 @@ export default function Review() {
         ))}
         <ListItem sx={{ py:0, paddingTop: 1, px: 0 }}>
           <ListItemText primary="Coffee"/>
-          <Typography variant="subtitle1" sx={{fontWeight: 700 }}>
+          <Typography variant="subtitle1" align="center" sx={{fontWeight: 700 }}>
             ${ Math.round(totalPrice * 100) / 100} ~  <NearLogo /> {nearCoffeePrice}
           </Typography>
         </ListItem>
@@ -188,7 +188,7 @@ export default function Review() {
         <ListItem sx={{ py: 0.5, paddingBottom: 1,  px: 0 }}>
           <ListItemText primary="Subtotal"/>
           <Typography variant="subtitle1" sx={{fontWeight: 700 }}>
-            ${ Math.round(l_totalCheckoutPrice * 100) / 100} ~  <NearLogo /> {l_nearTotalCheckoutPrice}
+            ${ Math.round(l_totalCheckoutPrice * 100) / 100} ~  <NearLogo  /> {l_nearTotalCheckoutPrice}
           </Typography>
         </ListItem>
       </List>
