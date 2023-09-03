@@ -17,7 +17,6 @@ import {
 	setupModal,
 	WalletSelectorModal,
 } from "@near-wallet-selector/modal-ui";
-import { setupDefaultWallets } from "@near-wallet-selector/default-wallets";
 import { providers } from "near-api-js";
 import { toast, ToastContainer } from "react-toastify";
 import { Transaction } from "near-api-js/lib/transaction";
@@ -28,9 +27,6 @@ import { setupMyNearWallet } from "@near-wallet-selector/my-near-wallet";
 import { setupLedger } from "@near-wallet-selector/ledger"
 import { setupHereWallet } from "@near-wallet-selector/here-wallet";
 // import { MARKETPLACE_CONTRACT, NETWORK_ID, NFT_CONTRACT } from "../lib/env";
-
-import LedgerIconUrl from '@near-wallet-selector/ledger/assets/ledger-icon.png';
-import MyNearIconUrl from '@near-wallet-selector/my-near-wallet/assets/my-near-wallet-icon.png';
 
 const NETWORK_ID = "testnet"
 const MARKETPLACE_CONTRACT = "dev-1690832838546-52413979946374"
@@ -111,9 +107,8 @@ export const NearProvider = ({ children }: NearProviderProps) => {
 				setupMeteorWallet(),
 				setupNearWallet(),
                 setupMyNearWallet(),
-				setupLedger({ iconUrl: LedgerIconUrl }),
+				setupLedger(),
 				setupHereWallet(),
-				...(await setupDefaultWallets()),
 			],
 		});
 		const _modal = setupModal(_selector, { contractId: MARKETPLACE_CONTRACT });
