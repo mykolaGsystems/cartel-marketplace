@@ -18,6 +18,11 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Typography from '@mui/material/Typography';
 import { toast } from 'react-hot-toast';
+import Divider from '@mui/material/Divider';
+import Grid from '@mui/material/Grid';
+
+import { useTheme } from '@mui/material/styles';
+
 
 
 const StyledButton = styled(Button)(({ theme }) => ({
@@ -52,6 +57,7 @@ const StyledInput = styled(TextField)({
 });
 
 const ProductDetails = ({ product, products }) => {
+  const theme = useTheme();
   const { image, name, details, price, size, grind, process, notes, origins, roastDepth, price_per_grams } = product;
   const [index, setIndex] = useState(0);
   const [selectedSize, setSelectedSize] = useState(null);
@@ -68,9 +74,7 @@ const ProductDetails = ({ product, products }) => {
     if(selected_size !== null){
       product["size_selected"] = selected_size["grams"];
       product["price"] = selected_size["price"];
-     
     };
-   
   };
 
   const grindSelect = (event, selected_grind) => {
@@ -92,9 +96,9 @@ const ProductDetails = ({ product, products }) => {
     <div>
       <div className="product-detail-container">
         <div>
-          <div className="image-container">
+          {/* <div className="product-details-image-container"> */}
             <img src={urlFor(image && image[index])} className="product-detail-image" />
-          </div>
+          {/* </div> */}
           <div className="small-images-container">
             {image?.map((item, i) => (
               <img 
@@ -124,9 +128,9 @@ const ProductDetails = ({ product, products }) => {
                   <ToggleButton
                     key={i} 
                     value={obj}
-                    sx={{fontSize: "16px",  fontWeight: "bold", 
-                        padding: "15px", maxHeight: "40px", 
-                        minWidth: "90px", border: "1px solid grey",
+                    sx={{fontSize: "14px",  fontWeight: "bold", 
+                        padding: "12px", maxHeight: "35px", 
+                        minWidth: "80px", border: "1px solid grey",
                         color: blueGrey[700], textTransform: "lowercase",
                         "&:hover" : {
                           backgroundColor: blueGrey[100],
@@ -159,9 +163,10 @@ const ProductDetails = ({ product, products }) => {
                     <ToggleButton
                       key={i} 
                       value={obj}
-                      sx={{fontSize: "14px", fontWeight: "bold", 
-                          padding: "15px", maxHeight: "40px",
-                          minWidth: "90px", border: "1px solid grey", 
+                      sx={{
+                          fontSize: "12px", fontWeight: "bold", 
+                          padding: "12px", maxHeight: "35px",
+                          minWidth: "80px", border: "1px solid grey", 
                           color: blueGrey[700],
                           "&:hover" : {
                             backgroundColor: blueGrey[100],
@@ -207,16 +212,32 @@ const ProductDetails = ({ product, products }) => {
             <Stack direction="row"  sx={{display: 'inline', marginLeft: "6px"}} spacing={1}>
         
               {process.map((obj, i) => 
-                <Chip key={i} size="small" variant="filled" sx={{fontSize: "16px", padding: "10px"}} label={obj} />
+                // <Chip key={i} size="small" variant="filled" sx={{fontSize: "16px", padding: "10px"}} label={obj} />
+                <Grid item key={i} xs={6} lg={3} sx={{ display: 'inline' }}>
+                <Chip
+                  size="small"
+                  variant="filled"
+                  sx={{ fontSize: '16px', padding: '10px', margin: '6px' }}
+                  label={obj}
+                />
+              </Grid>
               )}
             </Stack>
           </Box>
           <Box sx={{ marginBottom: "20px", marginTop:"10px"}}>
             <Box component="div" sx={{ display: 'inline', fontStyle: 'italic' }} >Notes:</Box>
-            <Stack direction="row"  sx={{display: 'inline', marginLeft: "6px"}} spacing={1}>
+            <Stack direction="row" sx={{display: 'inline', marginLeft: "6px"}} spacing={1}>
         
               {notes.map((obj, i) => 
-                <Chip key={i} size="small" variant="filled" sx={{fontSize: "16px", padding: "10px"}} label={obj} />
+                // <Chip key={i} size="small" variant="filled" sx={{fontSize: "16px", padding: "10px"}} label={obj} />
+                <Grid item key={i} sx={{display: 'inline'}}>
+                  <Chip
+                    size="small"
+                    variant="filled"
+                    sx={{ fontSize: '16px', padding: '10px', margin: '6px' }}
+                    label={obj}
+                  />
+                </Grid>
               )}
             </Stack>
           </Box>
@@ -225,7 +246,15 @@ const ProductDetails = ({ product, products }) => {
             <Stack direction="row"  sx={{display: 'inline', marginLeft: "6px"}} spacing={1}>
         
               {origins.map((obj, i) => 
-                <Chip key={i} size="small" variant="filled" sx={{fontSize: "16px", padding: "10px"}} label={obj} />
+                // <Chip key={i} size="small" variant="filled" sx={{fontSize: "16px", padding: "10px"}} label={obj} />
+                <Grid item key={i} xs={6} lg={3} sx={{ display: 'inline' }}>
+                  <Chip
+                    size="small"
+                    variant="filled"
+                    sx={{ fontSize: '16px', padding: '10px', margin: '6px' }}
+                    label={obj}
+                  />
+                </Grid>
               )}
             </Stack>
           </Box>
