@@ -15,6 +15,7 @@ import { blueGrey } from "@mui/material/colors";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 
+
 const StyledButton = styled(Button)(({ theme }) => ({
   color: theme.palette.getContrastText(blueGrey[50]),
   backgroundColor: blueGrey[50],
@@ -113,8 +114,8 @@ const Cart = () => {
 
                   <div> 
                       <h5>{item.name}</h5>
-                      <p style={{fontSize: "18px", marginTop: "8px"}}>Size: {item.size_selected}g</p>
-                      <p style={{fontSize: "18px", marginTop: "8px"}}>Grind: {item.grind_selected}</p>
+                      <p className='item-desc-params'>Size: {item.size_selected}g</p>
+                      <p className='item-desc-params'>Grind: {item.grind_selected}</p>
                   </div>
                
                   {/* <h5>{item.size_selected}</h5> */}
@@ -154,12 +155,12 @@ const Cart = () => {
               <h3>${ Math.round(totalPrice * 100) / 100}</h3>
             </div>
             <div className="btn-container">
-              <button type="button" className="btn" onClick={handleStripeCheckout}>
-                Pay with Stripe
+              <button disabled type="button" className="btn" >
+                Pay with Stripe (Coming)
               </button>
               <Link href="/checkout">
                 <button type="button" className="btn" onClick={handleNEARPayment}>
-                  Pay with NEAR
+                  Pay with NEAR 
                 </button>
               </Link>
             </div>

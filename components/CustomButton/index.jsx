@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 const CustomButton = ({ children, ...props }) => {
   return (
     <Button
-    variant="outlined" 
+  
             size="medium"
       sx={{
         color: "#484848", border: "1px solid #484848", 

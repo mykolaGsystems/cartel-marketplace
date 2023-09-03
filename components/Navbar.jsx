@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { AiOutlineShopping } from 'react-icons/ai'
 
-import { Cart } from './';
+import { Cart } from '.';
 import { useStateContext} from '../context/StateContext';
 import { VscClose } from 'react-icons/vsc'
 
@@ -15,7 +15,7 @@ import { useNearContext } from "../context/NearContext"
 // import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
-import ConnectButton from '../components/ConnectButton'
+import ConnectButton from './ConnectButton'
 
 
 
@@ -29,16 +29,11 @@ const Navbar = () => {
         
       <Link href="/">
         <div className='row'>
-          {/* <img src={'../static/logo_b.png'} alt="" className='logo-img'></img> */}
           <img src={'../static/ecc_logo_plain.png'} alt="" className='logo-img'></img>
           <VscClose/>
           <img src={'../static/near.png'} alt="" className='logo-img'></img>
         </div>
         </Link>
-
-        {/* <Link href="/">
-          <img src={'../static/logo_b.png'} alt="" className='logo-img'></img>
-        </Link> */}
 
         <Stack spacing={2} direction="row">
           
