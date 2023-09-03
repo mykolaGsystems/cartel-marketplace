@@ -911,8 +911,8 @@ margin-top: 160px;
     }
 
     .product-detail-image{
-      max-height: 275px;
-      max-width: 200px;
+      max-height: 300px;
+      max-width: 225px;
     }
     
     .marquee {
@@ -934,13 +934,6 @@ margin-top: 160px;
     .buttons{
       display: flex;
       justify-content: space-between !important;
-    
-    }
-
-    .product-details-image-container {
-      display: flex;
-      align-items: center;
-      background-color: red;
     
     }
 
