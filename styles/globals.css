@@ -937,6 +937,11 @@ margin-top: 160px;
     
     }
 
+    .track {
+      animation: marquee 10s linear infinite;
+      width: 300% !important;
+    }
+
     /* .buttons .add-to-cart{
       width: 100px;
     }
