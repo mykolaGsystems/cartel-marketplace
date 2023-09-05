@@ -83,7 +83,7 @@ import InputLabel from '@mui/material/InputLabel';
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
-        Shipping address
+        Shipping address:
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
@@ -222,7 +222,7 @@ import InputLabel from '@mui/material/InputLabel';
       {/* Delivery Section  */}
 
       <Typography variant="h6" sx={{marginTop: "25px"}} gutterBottom>
-        Delivery options
+        Region:
       </Typography>
       <Grid item xs={12} sx={{marginTop:"15px"}}>
         <FormControl sx={{  minWidth: "100%" }}>

@@ -15,7 +15,6 @@ import { blueGrey } from "@mui/material/colors";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 
-
 const StyledButton = styled(Button)(({ theme }) => ({
   color: theme.palette.getContrastText(blueGrey[50]),
   backgroundColor: blueGrey[50],
@@ -54,23 +53,23 @@ const Cart = () => {
   const handleStripeCheckout = async () => {
     const stripe = await getStripe();
 
-    // const response = await fetch('/api/stripe', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(cartItems),
-    // });
+    const response = await fetch('/api/stripe', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(cartItems),
+    });
 
-    // if(response.statusCode === 500) return;
+    if(response.statusCode === 500) return;
     
-    // const data = await response.json();
-    // // console.log(data)
+    const data = await response.json();
+    // console.log(data)
 
-    // toast.loading('Redirecting...');
+    toast.loading('Redirecting...');
 
-    // stripe.redirectToCheckout({ sessionId: data.id });
-    console.log(cartItems)
+    stripe.redirectToCheckout({ sessionId: data.id });
+    
   }
 
   const handleNEARPayment = async () => {
@@ -155,8 +154,8 @@ const Cart = () => {
               <h3>${ Math.round(totalPrice * 100) / 100}</h3>
             </div>
             <div className="btn-container">
-              <button disabled type="button" className="btn" >
-                Pay with Stripe (Coming)
+              <button  type="button" className="btn" onClick={handleStripeCheckout} >
+                Pay with Stripe
               </button>
               <Link href="/checkout">
                 <button type="button" className="btn" onClick={handleNEARPayment}>
