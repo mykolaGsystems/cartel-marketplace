@@ -44,6 +44,11 @@ export default async function handler(req, res) {
   
           totalGrams_temp = totalGrams_temp - ( q * 500 ); 
           totalGramsPrice_temp = totalGramsPrice_temp + region["g500"]["0"]["price"] * q
+        } else if (Math.floor(totalGrams_temp / 250) > 0) {
+          const q = Math.floor(totalGrams_temp / 250);
+  
+          totalGrams_temp = totalGrams_temp - ( q * 250 ); 
+          totalGramsPrice_temp = totalGramsPrice_temp + region["g500"]["0"]["price"] * q
         };
       };
 

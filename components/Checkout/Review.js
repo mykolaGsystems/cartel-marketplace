@@ -85,6 +85,11 @@ export default function Review() {
 
         totalGrams = totalGrams - ( q * 500 ); 
         totalGramsPrice = totalGramsPrice + deliveryRegion["g500"]["0"]["price"] * q
+      } else if (Math.floor(totalGrams / 250) > 0) {
+        const q = Math.floor(totalGrams / 250);
+
+        totalGrams = totalGrams - ( q * 250 ); 
+        totalGramsPrice = totalGramsPrice + deliveryRegion["g500"]["0"]["price"] * q
       };
       console.log("Iter", totalGrams , totalGramsPrice);
     };
