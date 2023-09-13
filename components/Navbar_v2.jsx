@@ -60,8 +60,8 @@ function ResponsiveAppBar() {
                 }}
             >
                 <img src={'../static/ecc_logo_plain.png'} alt="" className='logo-img'></img>
-                <VscClose/>
-                <img src={'../static/near.png'} alt="" className='logo-img-near'></img>
+                {/* <VscClose/>
+                <img src={'../static/near.png'} alt="" className='logo-img-near'></img> */}
             </Box>
           </Link>
          
@@ -115,12 +115,12 @@ function ResponsiveAppBar() {
                   display: { xs: 'flex', md: 'none' },
                   alignItems:"center",
                   justifyContent: "center",
-                  flexGrow: 10,
+                  flexGrow: 200,
                 }}
             >
                 <img src={'../static/ecc_logo_plain.png'} alt="" className='logo-img'></img>
-                <VscClose/>
-                <img src={'../static/near.png'} alt="" className='logo-img-near'></img>
+                {/* <VscClose/>
+                <img src={'../static/near.png'} alt="" className='logo-img-near'></img> */}
             </Box>
           </Link>
           
