@@ -8,7 +8,7 @@ const Home = ({ products, bannerData }) => (
   <div>
     <HeroBanner heroBanner={bannerData.length && bannerData[0]}  />
     <div className="products-heading">
-      <h2>Our's Coffee</h2>
+      <h2>House coffee</h2>
       <p>Various options of coffee</p>
     </div>
 

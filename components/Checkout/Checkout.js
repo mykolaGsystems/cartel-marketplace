@@ -18,6 +18,7 @@ import Review from './Review';
 import { encodeData }  from "../../lib/services";
 import { useCheckoutContext } from '../../context/CheckoutContext';
 import { useNearContext } from "../../context/NearContext"
+import { useStateContext } from '../../context/StateContext';
 import { toast } from 'react-hot-toast';
 import { utils } from 'near-api-js'
 
@@ -43,6 +44,7 @@ export default function Checkout({ delivery_options }) {
   const router = useRouter();
   const [activeStep, setActiveStep] = useState(0);
   const { accountId, viewMethod, callMethods, getTransactionResult } = useNearContext();
+  const { cartItems } = useStateContext();
   const [ hash, setHash ] = React.useState('');
 
 
@@ -70,13 +72,24 @@ export default function Checkout({ delivery_options }) {
   const nearPay = async () => { 
 
     let deposit = utils.format.parseNearAmount("1"); //nearTotalPrice.toString()
+
+    let items = []
+
+    cartItems.map((item) => {
+      items.push(
+        [
+          item._id, item.quantity 
+        ]
+      );
+    });
     // let deposit = utils.format.parseNearAmount(nearTotalPrice.toString());
     await callMethods([
       {
         contractId: MARKETPLACE_ADDRESS,
         methodName: "confirm_purchase",
         args : {
-          "encoded_message" : encrypted, "items" : [["1", 1]]
+          // "encoded_message" : encrypted, "items" : [["1", 1]]
+          "encode_message" : encrypted, "items": items
         },
         gas: "250000000000000",
         amount: deposit      }
