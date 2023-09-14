@@ -65,8 +65,14 @@ const ProductDetails = ({ product, products }) => {
   const { decQty, incQty, qty, onAdd, setShowCart } = useStateContext();
 
   const handleBuyNow = () => {
-    onAdd(product, qty);
-    setShowCart(true);
+    if( selectedGrind == null){
+      toast.error("Please select Grind type before continuing");
+    } else if ( selectedSize == null) {
+      toast.error("Please select Size before continuing");
+    } else {
+      onAdd(product, qty);
+      setShowCart(true);
+    }
   }
 
   const sizeSelect = (event, selected_size) => {
