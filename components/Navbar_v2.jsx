@@ -12,6 +12,8 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import { green, red } from '@mui/material/colors';
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 
 import { VscClose } from 'react-icons/vsc'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -64,20 +66,35 @@ function ResponsiveAppBar() {
                 <img src={'../static/near.png'} alt="" className='logo-img-near'></img> */}
             </Box>
           </Link>
-         
-
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
+            { 
+              accountId ? 
+              (
+                <IconButton
+                size="large"
+                onClick={signOut}
+                sx={{ color: green[800] }}
+              >
+                {/* <MenuIcon /> */}
+                <AccountBalanceWalletIcon/>
+              </IconButton>
+              ) 
+                : 
+              (
+                <IconButton
+                size="large"
+                onClick={() => modal.show()}
+                color="inherit"
+                // sx={{ color : red[900]}}
+                // sx={{ color: accountId ? green[700] : 'inherit' }}
+              >
+                {/* <MenuIcon /> */}
+                <AccountBalanceWalletIcon/>
+              </IconButton>
+              )
+            }
+            
+            {/* <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
               anchorOrigin={{
@@ -97,13 +114,13 @@ function ResponsiveAppBar() {
                 "& .MuiMenu-list": {padding: "0"}
               }}
             >
-              {/* {pages.map((page) => (
+              {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
-              ))} */}
+              ))}
                 <ConnectButton/>
-            </Menu>
+            </Menu> */}
           </Box>
           {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} /> */}
           <Link href="/">
