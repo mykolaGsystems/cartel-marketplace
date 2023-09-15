@@ -47,8 +47,6 @@ export default function Checkout({ delivery_options }) {
   const { cartItems } = useStateContext();
   const [ hash, setHash ] = React.useState('');
 
-
-
   const { firstName, lastName, email, 
           mobile, address1,  address2, 
           city, state, zip, country, updateEncrypted, encrypted, nearTotalPrice, deliveryRegion } = useCheckoutContext();
@@ -92,7 +90,8 @@ export default function Checkout({ delivery_options }) {
           "encode_message" : encrypted, "items": items
         },
         gas: "250000000000000",
-        amount: deposit      }
+        amount: deposit      
+      }
     ]);
 
     // router.push("/confirmation");
@@ -131,6 +130,12 @@ export default function Checkout({ delivery_options }) {
       toast.error(`Error. Please select the Delivery Region;`);
       validation = false;
     };
+
+    // Wallet connection check
+    if(!accountId) {
+      toast.error(`Please connect NEAR wallet to proceed;`);
+      validation = false;
+    }
     
     if(validation){
       toast.promise(
