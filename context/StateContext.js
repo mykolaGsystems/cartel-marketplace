@@ -30,33 +30,48 @@ export const StateContext = ({ children }) => {
   }, [cartItems, totalPrice, totalQuantities, qty]);
 
   const onAdd = (product, quantity, options) => {
-    
-    // Chnage the Id depending on the selected parameters
-    product["_id"] = product["_id"] + "_" + product["size_selected"] + "_" + product["grind_selected"];
 
+    const product_id = product["_id"] + "_" + product["size_selected"] + "_" + product["grind_selected"];
+
+    const checkProductInCart = cartItems.find((item) => 
+      item._id === product_id
+      // && 
+      // item["size_selected"] === product["size_selected"] && 
+      // item["grind_selected"] === product["grind_selected"]
+    );
+  
     console.log("Added", product);
 
-    const checkProductInCart = cartItems.find((item) => item._id === product._id);
+
+    
+    if(checkProductInCart) {
+      setCartItems((cartItems) => 
+        cartItems.map((cartProduct) => 
+          cartProduct._id === product_id
+          // && 
+          // cartProduct["size_selected"] === product["size_selected"] && 
+          // cartProduct["grind_selected"] === product["grind_selected"]
+          ? { ...cartProduct, quantity: cartProduct.quantity + quantity } : cartProduct
+        )
+      );
+      // setCartItems(updatedCartItems);
+    } else {
+      product.quantity = quantity;
+
+      let new_product = JSON.parse(JSON.stringify(product));
+      new_product["_id"] = new_product["_id"] + "_" + new_product["size_selected"] + "_" + new_product["grind_selected"];
+
+      setCartItems(oldArray => [...oldArray, new_product]);
+    }
 
     setTotalPrice((prevTotalPrice) => prevTotalPrice + product.price * quantity);
     setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + quantity);
-    
-    if(checkProductInCart) {
-      const updatedCartItems = cartItems.map((cartProduct) => {
-        if(cartProduct._id === product._id) return {
-          ...cartProduct,
-          quantity: cartProduct.quantity + quantity
-        }
-      })
-
-      setCartItems(updatedCartItems);
-    } else {
-      product.quantity = quantity;
-      
-      setCartItems([...cartItems, { ...product }]);
-    }
 
     toast.success(`${qty} ${product.name} added to the cart.`);
+
+    // const product_id = product["_id"] + "_" + product["size_selected"] + "_" + product["grind_selected"];
+
+    
   } 
 
   const onRemove = (product) => {
