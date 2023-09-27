@@ -74,6 +74,7 @@ function ResponsiveAppBar() {
                 size="large"
                 onClick={signOut}
                 sx={{ color: green[800] }}
+                
               >
                 {/* <MenuIcon /> */}
                 <AccountBalanceWalletIcon/>
@@ -84,7 +85,8 @@ function ResponsiveAppBar() {
                 <IconButton
                 size="large"
                 onClick={() => modal.show()}
-                color="inherit"
+                sx={{ color: red[900] }}
+                className='breathe-wallet'
                 // sx={{ color : red[900]}}
                 // sx={{ color: accountId ? green[700] : 'inherit' }}
               >
