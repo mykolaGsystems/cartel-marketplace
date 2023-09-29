@@ -48,7 +48,7 @@ export default async function handler(req, res) {
           const q = Math.floor(totalGrams_temp / 250);
   
           totalGrams_temp = totalGrams_temp - ( q * 250 ); 
-          totalGramsPrice_temp = totalGramsPrice_temp + region["g500"]["0"]["price"] * q
+          totalGramsPrice_temp = totalGramsPrice_temp + region["g250"]["0"]["price"] * q
         };
       };
 

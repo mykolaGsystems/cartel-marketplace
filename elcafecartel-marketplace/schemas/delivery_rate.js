@@ -14,6 +14,28 @@ export default {
             type: 'string',
         },
         {
+            name: 'g250',
+            title: '250 Grams',
+            type: 'array',
+            of: [
+                {
+                    type: 'object',
+                    fields : [
+                        {
+                            name: 'band',
+                            title: 'Band',
+                            type: 'number'
+                        },
+                        {
+                            name: 'price',
+                            title: 'Price',
+                            type: 'number'
+                        }
+                    ]
+                }
+            ]
+        },
+        {
             name: 'g500',
             title: '500 Grams',
             type: 'array',
