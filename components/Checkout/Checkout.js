@@ -55,7 +55,7 @@ export default function Checkout({ delivery_options }) {
     const urlParams = new URLSearchParams(window.location.search);
     const txhash = urlParams.get("transactionHashes");
     if(txhash !== null){
-      router.push("/");
+      router.push("/success");
       // let result = await getTransactionResult(txhash);
       // console.log("rez", result)
       // if(result.transaction_outcome.outcome){
