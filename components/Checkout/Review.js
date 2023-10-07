@@ -105,39 +105,8 @@ export default function Review() {
     setNearCoffeePrice((totalPrice / nearPrice).toFixed(3));
     setNearDeliveryPrice((totalGramsPrice / nearPrice).toFixed(3));
     setLNearTotalCheckoutPrice(((totalPrice + totalGramsPrice) / nearPrice).toFixed(3));
-    updateNearTotalPrice(((totalPrice + totalGramsPrice) / nearPrice).toFixed(3));
+    updateNearTotalPrice(((totalPrice + totalGramsPrice + 0.1) / nearPrice).toFixed(3));
   };
-
-  // const calculateGRate = () => {
-  //   let totalGramsPrice = 0
-  //   let totalGrams = 0;
-  //   cartItems.map((product)=> {
-  //     totalGrams = totalGrams + product["size_selected"] * product["quantity"]
-  //   });
-
-  //   console.log(totalGrams)
-  //   console.log(deliveryRegion)
-
-  //   let i = 0
-  //   while(totalGrams > 0){
-  //     if(Math.floor(totalGrams / 2000) > 0 ){
-  //       totalGrams = totalGrams - ( Math.floor(totalGrams / 2000) * 2000 ); 
-  //       totalGramsPrice = totalGramsPrice + deliveryRegion["g2000"]["0"]["price"]
-  //     } else if (Math.floor(totalGrams / 1000) > 0) {
-  //       totalGrams = totalGrams - ( Math.floor(totalGrams / 1000) * 1000 ); 
-  //       totalGramsPrice = totalGramsPrice + deliveryRegion["g1000"]["0"]["price"]
-  //     } else if (Math.floor(totalGrams / 500) > 0) {
-  //       totalGrams = totalGrams - ( Math.floor(totalGrams / 500) * 500 ); 
-  //       totalGramsPrice = totalGramsPrice + deliveryRegion["g500"]["0"]["price"]
-  //     };
-  //     console.log("Iter", totalGrams)
-  //   };
-
-  //   // Update the delivery price;
-  //   updateTotalDeliveryPrice(totalGramsPrice);
-
-  //   console.log("Total Grams:", totalGramsPrice)
-  // };
 
   useEffect(async () => {
     await getServerSideProps();

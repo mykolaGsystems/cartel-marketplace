@@ -55,8 +55,9 @@ export default function Checkout({ delivery_options }) {
     const urlParams = new URLSearchParams(window.location.search);
     const txhash = urlParams.get("transactionHashes");
     if(txhash !== null){
-      let result = await getTransactionResult(txhash);
-      console.log("rez", result)
+      router.push("/success");
+      // let result = await getTransactionResult(txhash);
+      // console.log("rez", result)
       // if(result.transaction_outcome.outcome){
       //   console.log("he")
       // };
@@ -69,7 +70,8 @@ export default function Checkout({ delivery_options }) {
 
   const nearPay = async () => { 
 
-    let deposit = utils.format.parseNearAmount("1"); //nearTotalPrice.toString()
+    // let deposit = utils.format.parseNearAmount("1"); 
+    // let deposit = nearTotalPrice.toString()
 
     let items = []
 
@@ -80,14 +82,14 @@ export default function Checkout({ delivery_options }) {
         ]
       );
     });
-    // let deposit = utils.format.parseNearAmount(nearTotalPrice.toString());
+    let deposit = utils.format.parseNearAmount(nearTotalPrice.toString());
     await callMethods([
       {
         contractId: MARKETPLACE_ADDRESS,
         methodName: "confirm_purchase",
         args : {
           // "encoded_message" : encrypted, "items" : [["1", 1]]
-          "encode_message" : encrypted, "items": items
+          "encoded_message" : encrypted, "items": items
         },
         gas: "250000000000000",
         amount: deposit      
