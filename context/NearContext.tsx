@@ -29,7 +29,7 @@ import { setupHereWallet } from "@near-wallet-selector/here-wallet";
 // import { MARKETPLACE_CONTRACT, NETWORK_ID, NFT_CONTRACT } from "../lib/env";
 
 const NETWORK_ID = "testnet"
-const MARKETPLACE_CONTRACT = "dev-1690832838546-52413979946374"
+const MARKETPLACE_CONTRACT = process.env.NEXT_PUBLIC_MARKETPLACE_CONTRACT_ADDRESS;
 
 type Account = {
 	accountId: string;
@@ -51,6 +51,11 @@ export interface IActionsParams {
 		deposit: string;
 	};
 }
+
+const provider = new providers.JsonRpcProvider(
+    "https://archival-rpc.testnet.near.org"
+);
+
 const NearContext = createContext<{
 	selector: WalletSelector | null;
 	modal: WalletSelectorModal | null;
@@ -225,6 +230,11 @@ export const NearProvider = ({ children }: NearProviderProps) => {
 		return res;
 	}
 
+	async function getState(txHash, account_id) {
+		const result = await provider.txStatus(txHash, account_id);
+		console.log("Result: ", result);
+		return result
+	}
 	async function callMethodsSingleTransaction(
 		contractId: string,
 		actions: IActionsParams[]
@@ -266,6 +276,7 @@ export const NearProvider = ({ children }: NearProviderProps) => {
 		callMethods,
 		callMethodsSingleTransaction,
 		isBrowserWallet,
+		getState,
 	};
 
 	return (
