@@ -230,7 +230,7 @@ export const NearProvider = ({ children }: NearProviderProps) => {
 		return res;
 	}
 
-	async function getState(txHash, account_id) {
+	async function getState(txHash: string, account_id: string){
 		const result = await provider.txStatus(txHash, account_id);
 		console.log("Result: ", result);
 		return result
