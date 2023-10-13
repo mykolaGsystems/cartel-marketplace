@@ -116,7 +116,7 @@ export const NearProvider = ({ children }: NearProviderProps) => {
 				setupHereWallet(),
 			],
 		});
-		const _modal = setupModal(_selector, { contractId: MARKETPLACE_CONTRACT });
+		const _modal = setupModal(_selector, { contractId: process.env.NEXT_PUBLIC_MARKETPLACE_CONTRACT_ADDRESS || "m22.hugebobadev.testnet" });
 		const state = _selector.store.getState();
 		setAccounts(state.accounts);
 
