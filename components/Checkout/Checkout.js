@@ -63,13 +63,21 @@ export default function Checkout({ delivery_options }) {
       setIsLoading(true);
       let txState = await getState(txhash, accountId);
       let result = txState["transaction_outcome"]["outcome"]["status"]["SuccessReceiptId"];
-      let receipt_value = txState["receipts_outcome"]["3"]["outcome"]["logs"]["10"];
+      // console.log(result)
+      let receipt_value = txState["receipts_outcome"]["3"]["outcome"]["logs"]["7"];
+      let receipt_object = JSON.parse(receipt_value.split('EVENT_JSON: ')[1]);
+
       // Ask for the ID and display it on the receipt;
       console.log("SuccessReceiptId : ", result);
       
       if (result !== "") {
         setIsLoading(false)
-        router.push("/success");
+        console.log(receipt_object)
+
+        router.push({
+          pathname: '/success',
+          query: { order_id: receipt_object["order_id"]}
+        });
       }
     };
   }
