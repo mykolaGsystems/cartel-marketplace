@@ -28,7 +28,7 @@ import { setupLedger } from "@near-wallet-selector/ledger"
 import { setupHereWallet } from "@near-wallet-selector/here-wallet";
 // import { MARKETPLACE_CONTRACT, NETWORK_ID, NFT_CONTRACT } from "../lib/env";
 
-const NETWORK_ID = "testnet"
+const NETWORK_ID = "mainnet"
 const MARKETPLACE_CONTRACT = process.env.NEXT_PUBLIC_MARKETPLACE_CONTRACT_ADDRESS;
 
 type Account = {
@@ -53,7 +53,7 @@ export interface IActionsParams {
 }
 
 const provider = new providers.JsonRpcProvider(
-    "https://archival-rpc.testnet.near.org"
+    "https://archival-rpc.mainnet.near.org"
 );
 
 const NearContext = createContext<{
@@ -116,7 +116,7 @@ export const NearProvider = ({ children }: NearProviderProps) => {
 				setupHereWallet(),
 			],
 		});
-		const _modal = setupModal(_selector, { contractId: process.env.NEXT_PUBLIC_MARKETPLACE_CONTRACT_ADDRESS || "m22.hugebobadev.testnet" });
+		const _modal = setupModal(_selector, { contractId: process.env.NEXT_PUBLIC_MARKETPLACE_CONTRACT_ADDRESS || "caffeink.elcafecartel.near" });
 		const state = _selector.store.getState();
 		setAccounts(state.accounts);
 
