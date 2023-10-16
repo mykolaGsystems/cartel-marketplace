@@ -55,7 +55,7 @@ export default function Review() {
 
 // Fetch NEAR Price
   const getServerSideProps = async () => {
-    const data = await viewMethod("priceoracle.testnet", "get_asset", { asset_id : "wrap.testnet" });
+    const data = await viewMethod("priceoracle.near", "get_asset", { asset_id : "wrap.near" });
     const nearPrice = (parseFloat(data["emas"][0]["price"]["multiplier"]) / 100000000).toFixed(8);
     console.log("Current near price", nearPrice);   
 
