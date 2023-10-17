@@ -45,11 +45,12 @@ function getStepContent(step, delivery_options) {
 export default function Checkout({ delivery_options }) {
   const [isLoading, setIsLoading] = useState(false);
   const [isButtonLoading, setButtonLoading] = useState(false);
-  const router = useRouter();
+  const [transactionResult, setTransactionResult] = useState('');
   const [activeStep, setActiveStep] = useState(0);
   const { accountId, viewMethod, callMethods, getState} = useNearContext();
   const { cartItems } = useStateContext();
   const [ hash, setHash ] = React.useState('');
+  const router = useRouter();
   const dataFetchedRef = useRef(false);
 
   const { firstName, lastName, email, 
@@ -82,12 +83,35 @@ export default function Checkout({ delivery_options }) {
     };
   }
 
+  const verifyResult_static = () => {
+    if (transactionResult != '') {
+      setIsLoading(true);
+      console.log(transactionResult)
+      let result = transactionResult[0]["transaction_outcome"]["outcome"]["status"]["SuccessReceiptId"];
+      let receipt_value = transactionResult[0]["receipts_outcome"]["3"]["outcome"]["logs"]["7"];
+      let receipt_object = JSON.parse(receipt_value.split('EVENT_JSON: ')[1]);
+
+      if (result !== "") {
+        setIsLoading(false)
+        console.log(receipt_object)
+
+        router.push({
+          pathname: '/success',
+          query: { order_id: receipt_object["order_id"]}
+        });
+      }
+    };
+  };
+
   useMemo( async () => {
     if (dataFetchedRef.current) return;
     dataFetchedRef.current = true;
     verifyResult();
-    
   }, [])
+
+  useEffect( () => {
+    verifyResult_static();
+  }, [transactionResult])
 
 
   // useEffect( async () => {
@@ -107,7 +131,7 @@ export default function Checkout({ delivery_options }) {
       );
     });
     let deposit = utils.format.parseNearAmount(nearTotalPrice.toString());
-    await callMethods([
+    let call_result = await callMethods([
       {
         contractId: MARKETPLACE_ADDRESS,
         methodName: "confirm_purchase",
@@ -119,6 +143,8 @@ export default function Checkout({ delivery_options }) {
         amount: deposit      
       }
     ]);
+
+    setTransactionResult(call_result);
 
     // router.push("/confirmation");
   };
@@ -182,7 +208,6 @@ export default function Checkout({ delivery_options }) {
 
   const handleBack = () => {
     setActiveStep(activeStep - 1);
-    
   };
 
   return (
