@@ -836,6 +836,7 @@ margin-top: 160px;
 }
 .cart-bottom{
   padding: 30px;
+  margin-bottom: 20px !important;
 }
 
 .total h3{
