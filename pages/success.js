@@ -39,7 +39,7 @@ const Success = () => {
         <p className="email-msg">We will be in touch with you shortly!</p>
         <p className="description">
           If you have any questions, please email
-          <a className="email" href="elcafecartel@gmail.com">
+          <a className="email" href="elcafecartel100@gmail.com">
             elcafecartel@gmail.com
           </a>
         </p>
