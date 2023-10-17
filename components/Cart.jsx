@@ -156,14 +156,14 @@ const Cart = () => {
               <h3>${ Math.round(totalPrice * 100) / 100}</h3>
             </div>
             <div className="btn-container">
-              <button  type="button" className="btn" onClick={handleStripeCheckout} >
-                Pay with Stripe
-              </button>
-              <Link href="/checkout">
+            <Link href="/checkout">
                 <button type="button" className="btn" onClick={handleNEARPayment}>
                   Pay with NEAR 
                 </button>
               </Link>
+              <button  type="button" className="btn" onClick={handleStripeCheckout} >
+                Pay with Stripe
+              </button>
             </div>
           </div>
         )}
