@@ -787,17 +787,17 @@ margin-top: 160px;
   }
   .cart-container{
     width: 415px;
-  padding: 4px;
+    padding: 4px;
   }
   .cart-heading{
-    margin-top: 35px;
+    margin-top: 20px;
   }
   .product-container{
-    margin-top: 5px;
+    margin-top: 2px;
     /* max-height: 425px; */
   }
   .product{
-    padding: 20px 5px;
+    padding: 10px 5px;
 
   }
   .product .cart-product-image{
