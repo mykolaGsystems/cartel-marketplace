@@ -114,10 +114,7 @@ export default function Checkout({ delivery_options }) {
   }, [transactionResult])
 
 
-  // useEffect( async () => {
-  //   c
 
-  // },[hash]);
 
   const nearPay = async () => { 
 
