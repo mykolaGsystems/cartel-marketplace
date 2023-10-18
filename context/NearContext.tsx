@@ -231,6 +231,9 @@ export const NearProvider = ({ children }: NearProviderProps) => {
 		const { network } = selector.options;
 		const provider = new providers.JsonRpcProvider({ url: network.nodeUrl });
 		const result = await provider.txStatus(txHash, account_id);
+		if (!result) {
+			toast.warn("Failed to get status from the NEAR explorer");
+		};
 		console.log("Result: ", result);
 		return result
 	}
