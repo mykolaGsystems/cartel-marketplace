@@ -45,9 +45,9 @@ function getStepContent(step, delivery_options) {
 export default function Checkout({ delivery_options }) {
   const [isLoading, setIsLoading] = useState(false);
   const [isButtonLoading, setButtonLoading] = useState(false);
-  const [transactionResult, setTransactionResult] = useState('');
+  const [transactionResult, setTransactionResult] = useState(null);
   const [activeStep, setActiveStep] = useState(0);
-  const { accountId, viewMethod, callMethods, getState} = useNearContext();
+  const { accountId, viewMethod, callMethods, getState, selector} = useNearContext();
   const { cartItems } = useStateContext();
   const [ hash, setHash ] = React.useState('');
   const router = useRouter();
@@ -60,7 +60,7 @@ export default function Checkout({ delivery_options }) {
   const verifyResult = async () => {
     const urlParams = new URLSearchParams(window.location.search);
     const txhash = urlParams.get("transactionHashes");
-    if(txhash !== null){
+    if ( txhash !== null ) {
       setIsLoading(true);
       let txState = await getState(txhash, accountId);
       let result = txState["transaction_outcome"]["outcome"]["status"]["SuccessReceiptId"];
@@ -83,23 +83,23 @@ export default function Checkout({ delivery_options }) {
     };
   }
 
-  const verifyResult_static = () => {
-    if (transactionResult != '') {
+  const verifyResult_static = async () => {
+    if ( transactionResult !== null ) {
       setIsLoading(true);
-      console.log(transactionResult)
+      console.log("Transaction Result:", transactionResult);
       let result = transactionResult[0]["transaction_outcome"]["outcome"]["status"]["SuccessReceiptId"];
       let receipt_value = transactionResult[0]["receipts_outcome"]["3"]["outcome"]["logs"]["7"];
       let receipt_object = JSON.parse(receipt_value.split('EVENT_JSON: ')[1]);
-
       if (result !== "") {
         setIsLoading(false)
         console.log(receipt_object)
-
         router.push({
           pathname: '/success',
           query: { order_id: receipt_object["order_id"]}
         });
-      }
+      } else {
+        toast.warning("Due to network load, transaction confirmation may take longer then expected;");
+      };
     };
   };
 
@@ -113,13 +113,8 @@ export default function Checkout({ delivery_options }) {
     verifyResult_static();
   }, [transactionResult])
 
-
-
-
   const nearPay = async () => { 
-
     let items = []
-
     cartItems.map((item) => {
       items.push(
         [
@@ -141,8 +136,10 @@ export default function Checkout({ delivery_options }) {
       }
     ]);
 
-    setTransactionResult(call_result);
-
+    const wallet = await selector.wallet();
+    if ( wallet.id == "meteor-wallet" ||  wallet.id == "here-wallet") {
+      setTransactionResult(call_result);
+    };
     // router.push("/confirmation");
   };
 
