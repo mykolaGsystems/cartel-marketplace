@@ -52,10 +52,6 @@ export interface IActionsParams {
 	};
 }
 
-const provider = new providers.JsonRpcProvider(
-    "https://archival-rpc.mainnet.near.org"
-);
-
 const NearContext = createContext<{
 	selector: WalletSelector | null;
 	modal: WalletSelectorModal | null;
@@ -231,6 +227,9 @@ export const NearProvider = ({ children }: NearProviderProps) => {
 	}
 
 	async function getState(txHash: string, account_id: string){
+		if (!selector) return;
+		const { network } = selector.options;
+		const provider = new providers.JsonRpcProvider({ url: network.nodeUrl });
 		const result = await provider.txStatus(txHash, account_id);
 		console.log("Result: ", result);
 		return result
