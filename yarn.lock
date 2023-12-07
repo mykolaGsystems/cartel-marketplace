@@ -6488,6 +6488,11 @@ neo-async@^2.6.2:
   resolved "https://registry.npmjs.org/neo-async/-/neo-async-2.6.2.tgz"
   integrity sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==
 
+next-replace-url@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.npmjs.org/next-replace-url/-/next-replace-url-1.0.3.tgz"
+  integrity sha512-qGx8qG6CI+xNY32K5GtI7WRgjSDpTrR9RtJx9OulT9KrtYHsUdK4AqQ5pt207CswVp+1FeJnniPl2C6rgRlgkQ==
+
 next-sanity-image@^3.2.1:
   version "3.2.1"
   resolved "https://registry.npmjs.org/next-sanity-image/-/next-sanity-image-3.2.1.tgz"
