@@ -12,6 +12,9 @@ import {
 	Optional,
 	setupWalletSelector,
 	WalletSelector,
+	BrowserWallet,
+	WalletModuleFactory,
+	WalletModule,
 } from "@near-wallet-selector/core";
 import {
 	setupModal,
@@ -26,6 +29,8 @@ import { setupMeteorWallet } from "@near-wallet-selector/meteor-wallet";
 import { setupMyNearWallet } from "@near-wallet-selector/my-near-wallet";
 import { setupLedger } from "@near-wallet-selector/ledger"
 import { setupHereWallet } from "@near-wallet-selector/here-wallet";
+import { setupMintbaseWallet } from "@near-wallet-selector/mintbase-wallet";
+
 // import { MARKETPLACE_CONTRACT, NETWORK_ID, NFT_CONTRACT } from "../lib/env";
 
 const NETWORK_ID = "mainnet"
@@ -110,6 +115,7 @@ export const NearProvider = ({ children }: NearProviderProps) => {
                 setupMyNearWallet(),
 				setupLedger(),
 				setupHereWallet(),
+				setupMintbaseWallet() as unknown as WalletModuleFactory
 			],
 		});
 		const _modal = setupModal(_selector, { contractId: process.env.NEXT_PUBLIC_MARKETPLACE_CONTRACT_ADDRESS || "caffeink.elcafecartel.near" });
